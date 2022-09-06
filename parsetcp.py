@@ -182,7 +182,7 @@ class BtArray:
     def readUnsignedInt(self):
         return int(self.byte_read(4), 16)
 
-    def readMultiByte(self, length: int, charset: str = 'gb2312'):
+    def readMultiByte(self, length: int, charset: str = 'gbk'):
         """
             字符串解码
         :param length: 长度
@@ -930,6 +930,28 @@ def 请求战斗(_loc2_: BtArray):
     print(_loc3_.__dict__)
 
 
+def print_spirit(data):
+    """
+        输出宠物信息
+    """
+    print("""名称：{}\n血量：{}""".format(data['spiritDes']['name'], data['curHP']))
+    for i in data['skills']:
+        print_skills(i)
+
+
+def print_skills(data):
+    """
+        输出技能信息
+    """
+    print("""\t{}:{}\t{}""".format(data['skillDes']['name'], data['ppLeft'], data['skillDes']['description']))
+
+
+def print_rivalInfo(data):
+    print("""用户名称：{}\nQQ：{}""".format(data['nickName'], data['id']))
+    for i in data['spirits']:
+        print_spirit(i)
+
+
 # 720897
 def 战斗(_loc2_: BtArray):
     if len(_loc2_) <= 100:
@@ -969,7 +991,14 @@ def 战斗(_loc2_: BtArray):
     _loc4_.myCurSpirit = _loc4_.myInfo['spirits'][_loc4_.myInfo['cIndex'] - 1]
     _loc4_.rivalCurSpirit = _loc4_.rivalInfo['spirits'][_loc4_.rivalInfo['cIndex'] - 1]
 
-    print(_loc4_.__dict__)
+    # TODO 展示不知道怎么展示
+    # print(
+    #     """
+    #     ***********************************************
+    #     * 对面昵称: {}
+    #     """
+    # )
+    print_rivalInfo(_loc4_.rivalInfo)
 
 
 # 720900

@@ -20,15 +20,15 @@ def pack_callback(packet):
         tcp_code = mySplit3(str(binascii.b2a_hex(bytes(packet["TCP"].payload)))[2:-1])
         print(tcp_code)
         print(tcp_parse.bt_array.bt_array)
-        try:
-            tcp_parse.push_stream(tcp_code)
-            tcp_parse.pull_stream()
-        except Exception as e:
-            print('error', e)
-        print('*' * 100)
+        # try:
+        tcp_parse.push_stream(tcp_code)
+        tcp_parse.pull_stream()
+        # except Exception as e:
+        #     print('error', e)
+        # print('*' * 100)
 
 
 # 嗅探数据包，参数：过滤器，回调函数，网卡，个数
 ifacestr = "Realtek PCIe GbE Family Controller"  # 网口名称，这里要换成自己的网卡名称
-filterstr = "host 140.206.161.253"  # 过滤条件，为空表示不限制
+filterstr = "host 101.91.21.39"  # 过滤条件，为空表示不限制
 sniff(filter=filterstr, prn=pack_callback, iface=ifacestr, count=0)  # count等0表示一直监听，要想监听数据包，需要首先安装 winpcap
